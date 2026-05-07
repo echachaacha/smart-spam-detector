@@ -2,10 +2,8 @@ import streamlit as st
 import joblib
 import time
 
-# 1. Konfigurasi Halaman
 st.set_page_config(page_title="AI Spam Guardian", page_icon="🛡️", layout="wide")
 
-# 2. CUSTOM CSS (Full Aesthetic Upgrade)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -98,7 +96,6 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. SIDEBAR (Control Panel)
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/4712/4712109.png", width=120)
     st.title("Control Panel")
@@ -107,7 +104,6 @@ with st.sidebar:
     st.markdown("### 💡 Quick Guide")
     st.caption("AI akan menganalisis struktur kata dan frekuensi kemunculannya untuk menentukan apakah pesan tersebut aman atau spam.")
 
-# 4. HEADER
 st.markdown('<div class="main-header">', unsafe_allow_html=True)
 col1, col2, col3 = st.columns([1, 4, 1])
 with col2:
@@ -117,7 +113,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# 5. DASHBOARD STATISTIK (Metric Cards)
 m1, m2, m3 = st.columns(3)
 with m1:
     st.markdown('<div class="metric-card"><h3>98%</h3><p>Accuracy Rate</p></div>', unsafe_allow_html=True)
@@ -128,7 +123,6 @@ with m3:
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-# 6. LOGIKA LOADING MODEL
 try:
     if bahasa == "Indonesia":
         model = joblib.load('model_spam_indo.pkl')
@@ -146,7 +140,6 @@ except:
     st.error("⚠️ Komponen Model (.pkl) tidak ditemukan. Pastikan file sudah ada di folder yang sama.")
     st.stop()
 
-# 7. AREA INPUT DAN ANALISIS
 c1, c2, c3 = st.columns([1, 5, 1])
 with c2:
     pesan = st.text_area(label_text, height=150, placeholder=placeholder)
@@ -155,8 +148,7 @@ with c2:
         if pesan.strip() != "":
             with st.spinner('AI sedang menganalisis pola kalimat...'):
                 time.sleep(1) 
-                
-                # Prediksi Machine Learning
+
                 vektor_pesan = tfidf.transform([pesan]).toarray()
                 prediksi = model.predict(vektor_pesan)
                 
